@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebAPI.Models.FilmVM>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FilmID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FilmAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sure)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KatID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilmID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FilmAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sure)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KatID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

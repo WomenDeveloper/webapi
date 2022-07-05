@@ -1,0 +1,19 @@
+﻿@model IEnumerable<WebApplication1.Models.Sepet>
+
+<table class="table">
+    @foreach(Sepet item in Model)
+    {
+     <tr>
+         <td>@item.Urun.UrunAdi</td>
+         <td>@item.Adet</td>
+     </tr>
+    }
+    <tr>
+        <td></td>
+        <td>
+            <form asp-action="SatinAl" asp-controller="Panel" asp-Area="Uyeler" method=post>
+              <input type="submit" class="btn btn-primary"  value="Satın Al"/>
+            </form>
+        </td>
+    </tr>
+</table>

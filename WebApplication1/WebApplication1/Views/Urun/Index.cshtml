@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebApplication1.Models.Urun>
+
+    <style>
+       a {
+        color:orange;
+
+       }
+       a:hover{
+         color:#333;
+       }
+    </style>
+
+<h2>Urunler Sayfasi</h2>
+
+<table class="table">
+    @foreach(Urun urun in Model)
+    {
+        <tr>
+            <td>@urun.UrunID</td>
+             <td>@urun.UrunAdi</td>
+             <td>@urun.Kategori.KategoriAdi</td>
+             <td>@urun.Fiyat</td>
+             
+            @if (User.Identity.IsAuthenticated)
+            {
+                <td>
+                    <a asp-area="Uyeler"  asp-controller="Panel" asp-action="SepeteEkle"  asp-route-id="@urun.UrunID">Sepete Ekle</a>
+                </td>
+            }
+        </tr>
+    }
+
+</table>

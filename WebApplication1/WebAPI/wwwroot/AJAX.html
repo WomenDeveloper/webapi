@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        function getData()
+        {
+            //AJAX
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200)
+                {
+                    //alert(xhr.responseText);
+                    var div = document.getElementById("jsonData");
+                    var json = xhr.responseText;
+                    div.innerHTML = json;
+
+                    var obj = JSON.parse(json);
+                    var tablo = document.getElementById("tablo");
+                    var str = "";
+                    for (let i = 0; i < obj.data.length; i++)
+                    {
+                        str += "<tr><td><img src='" + obj.data[i].avatar + "'/></td><td>" + obj.data[i].first_name + " " + obj.data[i].last_name+ "</td><tr>";
+                    }
+
+                    tablo.innerHTML = str;
+                }
+
+            };
+
+            //1.parametre HttpVerb
+            //2.Parametre Adres
+            //3.Parametre Asenkron calisip, calismayacaği...
+            xhr.open("GET","https://reqres.in/api/users?page=1",true);
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <button onclick="getData()">Get Data</button>
+    <div id="jsonData"></div>
+    <table id="tablo" border="1">
+
+    </table>
+</body>
+</html>

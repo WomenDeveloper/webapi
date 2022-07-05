@@ -1,0 +1,90 @@
+﻿Identity Kullanımı
+
+*update-database: var olan migration üzerinden veritabanını olusturur
+*Nerde olusturur? => appsettings.json içerisinde belirtilen yerde(ConnStr)
+
+Identity Ozelleştirme
+1-SQL Server üzeinde nasıl olusturulur?
+2-Kendi tablolarımı bu sisteme nasıl entegre ederim?
+3-Roller, rol kullnımları...
+4-Yetkilendirme(Admin,Uye)
+5-Ekran(MS sagladiği ekranlar) özelleştirmeler
+
+Islemler
+1-SQL Server'a taşıma
+  **Connection string'i degistir...
+
+2-Kendi tablolarımı bu sisteme nasıl entegre ederim?
+  *Modelleri Olustur?
+  *Uye ve Rol Sıniflarını ekle...
+  *Uye sınıfı IdentityUser<int> sınıfından turet...
+  *<int> Primary Key in int olacağını söyler...
+  *Rol sınıfını da IdentityRole<int> sınıfından türet...
+  *Navigation Property leri ekle...
+
+3-ApplicationDbContext Sınıfında yapılanlar
+  *Tablolara karşılık gelen DbSet<> leri olustur...
+  *ilgili sınıfın turediği sınıfı  IdentityDbContext<Uye,Rol,int> 
+    şekline getir...
+ 
+4-program.cs tarafında yapılanlar
+  *AddDefaultIdentity =>AddIdentity<Uye,Rol> şekline çevir
+  *AddMvc();
+
+5-Views=>Shared=>_LoginPartial.cshml içerisinde
+ @inject SignInManager<Uye> SignInManager
+ @inject UserManager<Uye> UserManager
+
+ şeklinde değişecek...
+
+ 6-Ekran Özelleştirmeleri
+  *proje uzerinde =>Add =>New Scaffolded Item =>
+   =>Soldaki Kısımdan "Identity" Gorulen Sagdaki ksımdan "Identity" => Add
+   =>Açılan ekrandaki sayfa seceneklerinden
+     *Register
+     *Login
+     *Logout Sec
+     DbContext sınıfı olarak aktif kullanılan DbContext sınıfını seç =>Add
+
+********
+Bu işlemden sonra; program.cs içerisine kendi kodlarını ekleyecek onları açıklama satiri yap...
+********
+
+6.1)Input Modelin Özelleştirilmesi (Register.cshtml)
+    (InputModel => Kullanıcı tarafında girilecek verilerin tutuldugu sınıf...)
+    *InputModel'e Ad,Soyad ve Adres vb. alanlarını ekle...(property)
+
+
+7. Veritabanına Admin ve Uye Rollerini ekleme...
+   * ApplicationDbContext sınıfında OnModelCreating() metodunu override ettik
+   * Configuration diye bir klasor olusturduk..(Adı onemli degil)
+   * RolCfg Sınıfına IEntityTypeConfiguration arayuzunu uyguladık..
+   * Gerekli kodları yaz...
+   * builder.ApplyConfiguration<Rol>(new RolCFG()) OnModelCreating metoduna satırını ekle....
+
+8. EnsureDeleted(), EnsureCreated metodlarını devre dışı bırak...
+
+9. Views=>Shared=>_LoginPartials.cshtml içerisinde
+   *Uyenin rolune gore gerekli linkleri olustur...
+
+10.Area kullanımı...
+   *Admin ve Uyeler adlı iki tane are olustur...
+   *Areas klasorunun uzerinde =>Add=>Area => MVCArea =>Add
+   *program.cs icerisine ScaffoldingReadme.txt dosyası içerindeki
+   app.UseEndpoints(endpoints =>
+        {
+          endpoints.MapControllerRoute(
+            name : "areas",
+            pattern : "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+          );
+        });
+
+   ekle ve duzenle...
+   *Area daki Controller lara [Area("Admin")] vb attribute'leri ekle...
+
+   *Tag-helpers ve layout page için...
+   *Identity  Area içerisindeki _ViewImports.cshtml ve _ViewStart.cshtml dosyalarını oluşturulan yeni area lara kopyala...
+
+11.Güvenlik
+   *Area içerisindeki tum controller lara ["Authorize"] attribute ını ekle...
+   *Roles="" diyerek ilgili yetkilendirmeyi yap...

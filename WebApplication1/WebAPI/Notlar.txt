@@ -1,0 +1,53 @@
+﻿SOA(Service Oriented Architecture)
+
+CORBA
+.Net Remoting
+XML Web Servisleri
+WCF(Windows Communication Foundation)
+RESTful Services
+  -WebAPI
+
+SOAP =>Simple Object Access Protocols (XML Bazlı)
+
+RESTful Sevices
+(REST:Represantational State Transfer)
+ WebAPI =>Microsoft'un RESTful service mimaridir..
+ WebAPI => MVC Altyapısını kullanır...(View Yok...)
+
+* 2000 yılında Roy T. Fieldening. Doktora Tezi
+*Http protokolunu kullanır...
+*Sadece Data yı gonderir...
+*Http Verbs(GET,POST, PUT,DELETE,PATCH)
+GET =>SELECT
+POST =>INSERT
+PUT =>UPDATE
+DELETE => DELETE
+
+XML(eXtensible Markup Language)
+<Kitaplar>
+  <Kitap>
+    <ID>123</ID>
+    <Ad>Olasılıksız</Ad>
+  </Kitap>
+   <Kitap>
+    <ID>125</ID>
+    <Ad>Empati</Ad>
+  </Kitap>
+</Kitaplar>
+
+JSON(Javascript Object Notation)
+[] =>Dizi
+{} =>object
+'a':'deneme' =>property
+[{ID:123,Ad:"Olasılıksız"},{ID:125,Ad:"Empati"}]
+
+Serialization? RAM de bulunan bir nesnenin string hale cvrilmesi islemi...
+Deserialization? strring halde olan bir ifadenin RAM'de object haline gelmesi islemi..
+
+Servisi Olusturma : WebAPI kullanarak
+Servisi Kullanma  : Adresini bilmek...
+                    HTML yada View (AJAX)
+                    Contoller veya Console veya Windows veya WPF (HttpClient)
+
+
+AJAX:Asyncronous JavaScript And XML
